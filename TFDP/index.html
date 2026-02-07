@@ -191,7 +191,7 @@
               <!-- paper -->
               
               <span class="link-block">
-                <a href="#" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                <a href="./static/pdf/TFDP_manuscript.pdf" class="external-link button is-normal is-rounded is-dark" target="_blank">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                   </span>
@@ -305,6 +305,18 @@
       </div>
     </div>
     <!--/ Abstract. -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Highlights</h2>
+        <div class="content has-text-justified summary-panel">
+          <ul>
+            <li>Identify multi-modal action ambiguity (MA<sup>2</sup>) as a key failure mode of diffusion policies in long-horizon manipulation.</li>
+            <li>Condition action generation on execution traces projected into the visual space, with a trace-focused field that emphasizes motion-relevant regions.</li>
+            <li>Demonstrate strong gains in temporal consistency and robustness to visual disturbances on real-world long-horizon tasks.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 </section>
 
 <section class="section">
@@ -358,15 +370,18 @@
           <p>
             TF-DP aggregates historical robot motions into a compact execution trace, projects it into the current visual observation, and computes a trace-focused field that emphasizes task-relevant regions associated with past motion. The diffusion policy then conditions action generation on both the current observation and the trace cues, producing stage-aware, temporally consistent actions.
           </p>
+          <p>
+            Concretely, TF-DP takes multi-view observations (global, side, wrist) and end-effector state, projects historical 3D end-effector positions into the global image, and renders a dense trace-focused field over the projected trajectory. This execution-aware observation guides the denoising process to resolve ambiguity when visually similar states recur.
+          </p>
           <div class="content has-text-centered">
             <img src="./static/images/framework.png" alt="TF-DP framework diagram"><br>
           </div>
           <p>
             Compared to diffusion policies conditioned only on instantaneous observations, TF-DP explicitly encodes execution history, resolving MA<sup>2</sup> within a single reactive policy without relying on hierarchical planners or external high-level reasoning.
           </p>
-          <div class="content has-text-centered">
-            <img src="./static/images/experimental_settings.png" alt="TF-DP experimental settings"><br>
-          </div>  
+          <p>
+            During training, trace-focused fields are rendered from full demonstration trajectories; during inference, the trace is updated online step-by-step, enabling closed-loop execution without changing the base policy architecture.
+          </p>
         </div>
       </div>
     </div>
@@ -378,7 +393,18 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Evaluations</h2>
+        <h2 class="title is-3">Experimental Results</h2>
+        <div class="content has-text-centered">
+          <img src="./static/images/experimental_settings.png" alt="TF-DP experimental settings"><br>
+        </div>
+        <div class="content has-text-justified summary-panel">
+          <p>
+            We compare TF-DP against diffusion policy baselines, including history-conditioned variants, to test whether execution traces resolve MA<sup>2</sup> and improve robustness under visual disturbances. TF-DP consistently recovers the correct action order in long-horizon execution and remains stable under cluttered scenes.
+          </p>
+          <p>
+            Experimental setup: a Franka Research 3 arm is observed by three RGB-D cameras (global overhead, side view, wrist). We evaluate three long-horizon tasks—place cube, press keyboard, and pick &amp; place cubes from drawers—designed to contain visually similar states that require different actions.
+          </p>
+        </div>
         <h2 class="title is-4">Qualitative Results</h2>
         <div class="container is-max-desktop">
           <h2 class="title is-5">Long-Horizon Consistency</h2>
@@ -396,8 +422,6 @@
             Robustness under Visual Disturbances
           </h2>
           <div class="content has-text-justified">
-            <img src="./static/images/exp_result1.png" alt="TF-DP robustness under visual disturbances"><br>
-            <br>
             <p>
               TF-DP remains stable under cluttered and visually disturbed scenes by leveraging trace-focused fields that emphasize task-relevant regions.
             </p>
@@ -407,57 +431,55 @@
 
         <div class="container is-max-desktop">
           <h2 class="title is-4">Videos</h2>
-          <div class="columns is-centered">
-            <div class="column">
-              <video class="video" controls muted loop playsinline>
-                <source src="./static/videos/Task1.mp4" type="video/mp4">
-              </video>
-              <div class="content has-text-centered">Task 1</div>
-            </div>
-            <div class="column">
-              <video class="video" controls muted loop playsinline>
-                <source src="./static/videos/Task2.mp4" type="video/mp4">
-              </video>
-              <div class="content has-text-centered">Task 2</div>
-            </div>
-            <div class="column">
-              <video class="video" controls muted loop playsinline>
-                <source src="./static/videos/Task3.mp4" type="video/mp4">
-              </video>
-              <div class="content has-text-centered">Task 3</div>
-            </div>
+          <div class="content has-text-justified summary-panel">
+            <p>
+              Each row compares the same manipulation task under two settings: the original scenario and a visually disturbed background.
+              TF-DP maintains stable execution despite clutter and appearance shifts, while preserving task-relevant action sequences.
+            </p>
           </div>
-          <div class="columns is-centered">
-            <div class="column">
+          <div class="columns is-centered results-grid">
+            <div class="column is-6">
               <video class="video" controls muted loop playsinline>
-                <source src="./static/videos/Task1_disturbed.mp4" type="video/mp4">
+                <source src="./static/videos/Task1_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 1 (Original)</div>
+            </div>
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task1_disturbed_h264.mp4" type="video/mp4">
               </video>
               <div class="content has-text-centered">Task 1 (Disturbed)</div>
             </div>
-            <div class="column">
+          </div>
+          <div class="columns is-centered results-grid">
+            <div class="column is-6">
               <video class="video" controls muted loop playsinline>
-                <source src="./static/videos/Task2_disturbed.mp4" type="video/mp4">
+                <source src="./static/videos/Task2_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 2 (Original)</div>
+            </div>
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task2_disturbed_h264.mp4" type="video/mp4">
               </video>
               <div class="content has-text-centered">Task 2 (Disturbed)</div>
             </div>
-            <div class="column">
+          </div>
+          <div class="columns is-centered results-grid">
+            <div class="column is-6">
               <video class="video" controls muted loop playsinline>
-                <source src="./static/videos/Task3_disturbed.mp4" type="video/mp4">
+                <source src="./static/videos/Task3_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 3 (Original)</div>
+            </div>
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task3_disturbed_h264.mp4" type="video/mp4">
               </video>
               <div class="content has-text-centered">Task 3 (Disturbed)</div>
             </div>
           </div>
         </div>
-
-        
-        <!-- <h2 class="title is-4">Speedups</h2>
-        <div class="content has-text-centered">
-          <img src="./static/images/speedup.png">
-        </div>
-        <div class="content has-text-justified">
-          <p>
-            Measured total latency of <span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span> for different models for generating a single video on 8 NVIDIA H100 GPUs. When utilizing a single GPU, we achieve a speedup ranging from 1.26x to 1.32x, which remains stable across different schedulers. Scaling to multiple GPUs, our method achieves a speedup of up to 10.6x, which almost linearly scales with the number of GPUs due to our efficient improvement of sequence parallel.
-          </p> -->
         </div>
       </div>
     </div>
@@ -467,14 +489,22 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">        
-        <div class="content has-text-justified">
-          <h2 class="title is-4">Quantitive Results</h2>
+        <h2 class="title is-4">Quantitative Results</h2>
+        <div class="content has-text-justified summary-panel">
           <p>
             TF-DP is evaluated on real-world robotic manipulation tasks that exhibit pronounced MA<sup>2</sup> and visually cluttered conditions. Compared to the vanilla diffusion policy, TF-DP improves success by <strong>80.56%</strong> on tasks with MA<sup>2</sup> and by <strong>86.11%</strong> under visual disturbances, while adding only <strong>6.4%</strong> runtime overhead.
           </p>
-          <div class="title is-5">Performance Summary</div>
-          <div class="content has-text-centered">
-            <img src="./static/images/exp_result2.png" alt="TF-DP quantitative results"><br>
+        </div>
+        <div class="content has-text-centered">
+          <div class="columns is-variable is-4 is-mobile results-grid">
+            <div class="column is-6">
+              <img class="result-img" src="./static/images/exp_result1.png" alt="TF-DP robustness under visual disturbances">
+              <div class="result-caption">Performance under original scenario.</div>
+            </div>
+            <div class="column is-6">
+              <img class="result-img" src="./static/images/exp_result2.png" alt="TF-DP quantitative results">
+              <div class="result-caption">Performance under visual disturbance.</div>
+            </div>
           </div>
         </div>
       </div>

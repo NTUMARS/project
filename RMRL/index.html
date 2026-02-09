@@ -173,7 +173,7 @@
 
   .media-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.2rem;
     margin-top: 1.5rem;
   }
@@ -259,6 +259,10 @@
     .highlight-card {
       text-align: center;
     }
+
+    .media-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 
@@ -290,7 +294,10 @@
             </div>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block">Affiliations: NTU Mars Lab</span>
+              <span class="author-block">
+                Affiliations:
+                <a href="https://marslab.tech/" target="_blank" rel="noopener">NTU Mars Lab</a>
+              </span>
             </div>
 
             <div class="is-size-5 publication-authors">
@@ -408,6 +415,21 @@
 
   <section class="section">
     <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <figure class="figure-card" style="margin: 0;">
+            <img src="./static/images/ICRA_26_Role_Model_RL.jpg" alt="RM-RL Teaser">
+            <figcaption>
+              Teaser — Precision pick-and-place with repeated trials under similar initial states.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <h2 class="title is-3 section-title">Abstract</h2>
@@ -461,6 +483,20 @@
                 These labeled samples are then replayed using a cross-entropy objective to improve sample efficiency and mitigate instability during learning.
               </p>
             </div>
+            <div class="figure-grid">
+              <figure class="figure-card">
+                <img src="./static/images/pipepline.png" alt="RM-RL pipeline">
+                <figcaption>
+                  Fig. 2 — RM-RL pipeline: online RL, role-model labeling, and supervised replay.
+                </figcaption>
+              </figure>
+              <figure class="figure-card">
+                <img src="./static/images/policy_network.png" alt="Policy network">
+                <figcaption>
+                  Fig. 3 — Policy network with image + pose inputs and probabilistic action heads.
+                </figcaption>
+              </figure>
+            </div>
 
             <h2 class="title is-3">Highlights</h2>
             <ul>
@@ -488,48 +524,17 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full-width">
-          <h2 class="title is-3 section-title">Figures</h2>
-          <div class="content has-text-centered">
-            <div class="figure-grid">
-              <figure class="figure-card">
-                <img src="./static/images/experimental_setting.png" alt="Experimental setting">
-                <figcaption>
-                  Fig. 4 — Real-world experimental setting: X-ARM 6, cell plate shelf, and overhead camera. Red stars mark target positions.
-                </figcaption>
-              </figure>
-              <figure class="figure-card">
-                <img src="./static/images/ICRA_26_Role_Model_RL.jpg" alt="RM-RL Teaser">
-                <figcaption>
-                  Teaser — Precision pick-and-place with repeated trials under similar initial states.
-                </figcaption>
-              </figure>
-              <figure class="figure-card">
-                <img src="./static/images/pipepline.png" alt="RM-RL pipeline">
-                <figcaption>
-                  Fig. 2 — RM-RL pipeline: online RL, role-model labeling, and supervised replay.
-                </figcaption>
-              </figure>
-              <figure class="figure-card">
-                <img src="./static/images/policy_network.png" alt="Policy network">
-                <figcaption>
-                  Fig. 3 — Policy network with image + pose inputs and probabilistic action heads.
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-full-width">
-          <h2 class="title is-3 section-title">Results Gallery</h2>
+          <h2 class="title is-3 section-title">Experimental Results</h2>
           <div class="content">
-            <p class="note-text">
-              Side-by-side examples highlight how role-model labeling stabilizes training and improves final precision.
+            <figure class="figure-card">
+              <img src="./static/images/experimental_setting.png" alt="Experimental setting">
+              <figcaption>
+                Fig. 4 — Real-world experimental setting: X-ARM 6, cell plate shelf, and overhead camera. Red stars mark target positions.
+              </figcaption>
+            </figure>
+            <p class="note-text" style="margin-top: 1.5rem;">
+              The following videos summarize qualitative performance. <b>originRL</b> and <b>RL with Replay Buffer</b> show failed cases of the original algorithm,
+              while <b>Pretrain + RL</b> and <b>RM-RL (ours)</b> demonstrate successful placement with the proposed method.
             </p>
             <div class="media-grid">
               <div class="media-card">
@@ -537,28 +542,28 @@
                   <source src="./static/videos/originRL.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p><b>Online RL baseline.</b> Slow convergence and larger pose drift.</p>
+                <p><b>origin RL (baseline).</b> Failed case of the original RL.</p>
               </div>
               <div class="media-card">
                 <video controls muted playsinline>
                   <source src="./static/videos/RLReplayBuffer.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p><b>Replay buffer only.</b> Distribution mismatch degrades stability.</p>
-              </div>
-              <div class="media-card">
-                <video controls muted playsinline>
-                  <source src="./static/videos/pretrainRL.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <p><b>Pretraining + RL.</b> Better initialization but still noisy.</p>
+                <p><b>origin RL with Replay Buffer.</b> Failed case of the original RL with replay buffer.</p>
               </div>
               <div class="media-card">
                 <video controls muted playsinline>
                   <source src="./static/videos/rmRL.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p><b>RM-RL (ours).</b> Consistent placement and tighter accuracy.</p>
+                <p><b>RM-RL (ours).</b> Successful demo of the proposed RM-RL method.</p>
+              </div>
+              <div class="media-card">
+                <video controls muted playsinline>
+                  <source src="./static/videos/pretrainRL.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <p><b>Pretrain + RL (ours).</b> Successful demo of the proposed pretrained RM-RL method.</p>
               </div>
             </div>
           </div>
@@ -566,6 +571,7 @@
       </div>
     </div>
   </section>
+
 
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">

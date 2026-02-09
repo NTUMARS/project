@@ -120,9 +120,24 @@
     color: rgba(248, 250, 252, 0.9);
   }
 
+  .lab-logo {
+    width: 120px;
+    height: auto;
+    margin: 0 auto 0.5rem;
+    display: block;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+  }
+
   .rmrl-hero .publication-authors,
   .rmrl-hero .publication-authors a {
     color: rgba(248, 250, 252, 0.88) !important;
+  }
+
+  .rmrl-hero .author-line {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
   }
 
   .rmrl-hero .button.is-dark {
@@ -135,7 +150,10 @@
     background: #ffffff;
     color: #0b1220;
   }
-
+  .rmrl-hero.hero.is-medium .hero-body {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
   .highlight-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -192,6 +210,7 @@
     height: auto;
     border-radius: 10px;
     display: block;
+    background: #0b1220;
   }
 
   .media-card p {
@@ -263,6 +282,10 @@
     .media-grid {
       grid-template-columns: 1fr;
     }
+
+    .lab-logo {
+      width: 96px;
+    }
   }
 </style>
 
@@ -272,19 +295,20 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <br>
+            <a href="https://marslab.tech/" target="_blank" rel="noopener">
+              <img class="lab-logo" src="./static/images/mars_lablogo.png" alt="Mars Lab logo">
+            </a>
             <h1 class="gradient-text-h1">
               <b>RM-RL</b>
             </h1>
             <h1 class="inline-h1">Role-Model Reinforcement Learning for Precise Robot Manipulation</h1>
-
             <div class="hero-meta">
               <span class="hero-chip">ICRA 2026</span>
               <span class="hero-chip">Real-World RL</span>
               <span class="hero-chip">Precision Pick-and-Place</span>
             </div>
 
-            <div class="is-size-5 publication-authors">
+            <div class="is-size-5 publication-authors author-line">
               <span class="author-block">
                 <a href="https://scholar.google.com/citations?user=wEV8pmkAAAAJ&hl=en" target="_blank" rel="noopener">Xiangyu Chen</a>,
                 <a href="https://scholar.google.com/citations?hl=en&user=dzp5JpMAAAAJ&view_op=list_works" target="_blank" rel="noopener">Chuhao Zhou</a>,
@@ -301,7 +325,7 @@
             </div>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block">Contact: <a href="mailto:xiangyu.chen@ntu.edu.sg">xiangyu.chen@ntu.edu.sg</a></span>
+              <span class="author-block">Contact: <a href="mailto:jianfei.yang@ntu.edu.sg">jianfei.yang@ntu.edu.sg</a></span>
             </div>
 
             <div class="column has-text-centered">
@@ -326,15 +350,6 @@
                 </span>
 
                 <span class="link-block">
-                  <a href="./ICRA_26_Role_Model_RL.pdf" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                    </span>
-                    <span>Local PDF</span>
-                  </a>
-                </span>
-
-                <span class="link-block">
                   <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="ai ai-obp"></i>
@@ -347,8 +362,8 @@
             </div>
 
             <p class="hero-summary">
-              RM-RL turns sparse real-world trials into supervised learning signals by selecting a role-model action
-              from repeated scenes, improving data efficiency and stability in millimeter-level manipulation tasks.
+              RM-RL converts real-world trials into supervised learning signals by selecting a role-model action
+              from repeated scenes, improving data efficiency and stability for millimeter-level manipulation.
             </p>
 
             <div class="highlight-grid">
@@ -365,9 +380,9 @@
                 <div>success w/ pretraining</div>
               </div>
             </div>
-
-            <br />
-
+            <p class="hero-summary" style="margin-top: 0.75rem; padding: 0.9rem 1.1rem; font-size:1.25rem; border-radius: 14px; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.22); font-style: italic;">
+              “When three people walk together, there must be a role model whom I can learn from; I will select the good qualities and follow them.” — Confucius, <i>The Analects</i>
+            </p>
           </div>
         </div>
       </div>
@@ -380,12 +395,12 @@
         <div class="column is-full-width">
           <div class="content has-text-justified section-card">
             <p>
-              This project page accompanies our ICRA 2026 paper <b>“RM-RL: Role-Model Reinforcement Learning for Precise Robot Manipulation”</b>.
-              We study a real-world precision pick-and-place setting where small translation/yaw errors can cause failure.
-              Standard real-world RL is often data-inefficient, while replay buffers can introduce distribution mismatch.
-              RM-RL addresses this by selecting a <b>role-model action</b> (the highest-reward action among trials sharing similar initial states)
-              and using it to <b>automatically label</b> peer samples, turning online interaction data into supervised training targets that can be replayed stably.
-              For full details, figures, and experimental results, please see the embedded PDF below or download the paper using the link in the header.
+              This page accompanies our ICRA 2026 paper <b>“RM-RL: Role-Model Reinforcement Learning for Precise Robot Manipulation”</b>.
+              We study a real-world precision pick-and-place task where small translation and yaw errors can cause failure.
+              Standard real-world RL is data-inefficient, and replay buffers can introduce distribution mismatch.
+              RM-RL selects a <b>role-model action</b> (the highest-reward action among trials sharing similar initial states)
+              and <b>automatically labels</b> peer samples, turning online interaction into supervised targets that replay stably.
+              See the PDF below or use the header link for full details and results.
             </p>
 
             <div class="content has-text-centered">
@@ -398,13 +413,14 @@
                   loop
                   playsinline
                   poster="./static/images/ICRA_26_Role_Model_RL.jpg">
-                  <source src="./static/videos/project_video.mp4" type="video/mp4">
+                  <source src="./static/videos/project_video.mp4" type="video/mp4; codecs=hev1">
+                  <source src="./static/videos/project_video.h264.mp4" type="video/mp4; codecs=avc1.42E01E">
                   Your browser does not support the video tag.
                 </video>
               </div>
               <br>
               <p class="note-text">
-                <b>Project Video.</b> End-to-end demonstration of role-model labeling and precision placement.
+                <b>Project Video.</b> End-to-end demonstration of role-model labeling and precise placement.
               </p>
             </div>
           </div>
@@ -417,32 +433,29 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full-width">
-          <figure class="figure-card" style="margin: 0;">
-            <img src="./static/images/ICRA_26_Role_Model_RL.jpg" alt="RM-RL Teaser">
-            <figcaption>
-              Teaser — Precision pick-and-place with repeated trials under similar initial states.
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3 section-title">Abstract</h2>
-          <div class="content has-text-justified section-card">
-            <p>
-              Precise robot manipulation is critical in laboratory and industrial workflows where millimeter-level errors can invalidate outcomes.
-              However, collecting expert demonstrations is costly, and purely online real-world RL can be slow and unstable.
-              We propose <b>RM-RL</b>, a role-model reinforcement learning framework that periodically identifies a <i>role-model</i> (approximate optimal) action
-              and uses it to label other samples collected under similar initial states, converting real-world RL trials into supervised learning data.
-              Combined with a hybrid online–offline training recipe, RM-RL improves data efficiency and training stability.
-              In real-world experiments, RM-RL improves translation accuracy by <b>53%</b> and rotation accuracy by <b>20%</b>,
-              and achieves up to <b>100%</b> success on the challenging “cell plate to shelf” task with pretraining.
-            </p>
+          <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
+          <div class="columns is-vcentered">
+            <div class="column is-6">
+              <div class="content has-text-justified section-card">
+                <p>
+                  Precise robot manipulation is critical in laboratory and industrial workflows where millimeter-level errors can invalidate outcomes.
+                  However, collecting expert demonstrations is costly, and purely online real-world RL can be slow and unstable.
+                  We propose <b>RM-RL</b>, a role-model reinforcement learning framework that periodically identifies a <i>role-model</i> (approximate optimal) action
+                  and uses it to label other samples collected under similar initial states, converting real-world RL trials into supervised data.
+                  Combined with a hybrid online–offline training recipe, RM-RL improves data efficiency and training stability.
+                  In real-world experiments, RM-RL improves translation accuracy by <b>53%</b> and rotation accuracy by <b>20%</b>,
+                  and reaches up to <b>100%</b> success on the challenging “cell plate to shelf” task with pretraining.
+                </p>
+              </div>
+            </div>
+            <div class="column is-6">
+              <figure class="figure-card" style="margin: 0;">
+                <img src="./static/images/ICRA_26_Role_Model_RL.jpg" alt="RM-RL Teaser">
+                <figcaption>
+                  Teaser — Precision pick-and-place with repeated trials under similar initial states.
+                </figcaption>
+              </figure>
+            </div>
           </div>
         </div>
       </div>
@@ -505,15 +518,6 @@
               <li><b>Real-world precision manipulation:</b> strong gains in pose accuracy and success rate on a challenging shelf placement task.</li>
             </ul>
 
-            <h2 class="title is-3">Resources</h2>
-            <div class="content">
-              <p>
-                <strong>PDF:</strong> Use the "Paper (PDF)" link in the header or the embedded viewer above. <br>
-                <strong>Code / Data:</strong> We will release the implementation and real-world training utilities after publication. <br>
-                <strong>Contact:</strong> Please email the authors for early access or reproducibility questions.
-              </p>
-            </div>
-
           </div>
         </div>
       </div>
@@ -526,41 +530,56 @@
         <div class="column is-full-width">
           <h2 class="title is-3 section-title">Experimental Results</h2>
           <div class="content">
-            <figure class="figure-card">
-              <img src="./static/images/experimental_setting.png" alt="Experimental setting">
-              <figcaption>
-                Fig. 4 — Real-world experimental setting: X-ARM 6, cell plate shelf, and overhead camera. Red stars mark target positions.
-              </figcaption>
-            </figure>
+            <div class="columns is-vcentered">
+              <div class="column is-6">
+                <p>
+                  <b>Experimental setup and tasks.</b> We evaluate RM-RL on a real-world precision pick-and-place benchmark using an X-ARM 6 with an overhead camera.
+                  Each trial starts from a slightly perturbed pose, and the policy predicts small translation and yaw corrections to place a cell plate into a shelf slot.
+                  We report accuracy in \( \Delta x \), \( \Delta y \), and \( \Delta \psi \), along with success rates over repeated trials, compared against online RL baselines and replay-buffer variants.
+                </p>
+              </div>
+              <div class="column is-6">
+                <figure class="figure-card" style="margin: 0;">
+                  <img src="./static/images/experimental_setting.png" alt="Experimental setting">
+                  <figcaption>
+                    Fig. 4 — Real-world experimental setting: X-ARM 6, cell plate shelf, and overhead camera. Red stars mark target positions.
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
             <p class="note-text" style="margin-top: 1.5rem;">
               The following videos summarize qualitative performance. <b>originRL</b> and <b>RL with Replay Buffer</b> show failed cases of the original algorithm,
               while <b>Pretrain + RL</b> and <b>RM-RL (ours)</b> demonstrate successful placement with the proposed method.
             </p>
             <div class="media-grid">
               <div class="media-card">
-                <video controls muted playsinline>
-                  <source src="./static/videos/originRL.mp4" type="video/mp4">
+                <video controls muted playsinline preload="metadata">
+                  <source src="./static/videos/originRL.mp4" type="video/mp4; codecs=hev1">
+                  <source src="./static/videos/originRL.h264.mp4" type="video/mp4; codecs=avc1.42E01E">
                   Your browser does not support the video tag.
                 </video>
                 <p><b>origin RL (baseline).</b> Failed case of the original RL.</p>
               </div>
               <div class="media-card">
-                <video controls muted playsinline>
-                  <source src="./static/videos/RLReplayBuffer.mp4" type="video/mp4">
+                <video controls muted playsinline preload="metadata">
+                  <source src="./static/videos/RLReplayBuffer.mp4" type="video/mp4; codecs=hev1">
+                  <source src="./static/videos/RLReplayBuffer.h264.mp4" type="video/mp4; codecs=avc1.42E01E">
                   Your browser does not support the video tag.
                 </video>
                 <p><b>origin RL with Replay Buffer.</b> Failed case of the original RL with replay buffer.</p>
               </div>
               <div class="media-card">
-                <video controls muted playsinline>
-                  <source src="./static/videos/rmRL.mp4" type="video/mp4">
+                <video controls muted playsinline preload="metadata">
+                  <source src="./static/videos/rmRL.mp4" type="video/mp4; codecs=hev1">
+                  <source src="./static/videos/rmRL.h264.mp4" type="video/mp4; codecs=avc1.42E01E">
                   Your browser does not support the video tag.
                 </video>
                 <p><b>RM-RL (ours).</b> Successful demo of the proposed RM-RL method.</p>
               </div>
               <div class="media-card">
-                <video controls muted playsinline>
-                  <source src="./static/videos/pretrainRL.mp4" type="video/mp4">
+                <video controls muted playsinline preload="metadata">
+                  <source src="./static/videos/pretrainRL.mp4" type="video/mp4; codecs=hev1">
+                  <source src="./static/videos/pretrainRL.h264.mp4" type="video/mp4; codecs=avc1.42E01E">
                   Your browser does not support the video tag.
                 </video>
                 <p><b>Pretrain + RL (ours).</b> Successful demo of the proposed pretrained RM-RL method.</p>
@@ -572,17 +591,38 @@
     </div>
   </section>
 
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3 section-title">Resources</h2>
+          <div class="content section-card">
+            <p>
+              <strong>PDF:</strong> Use the "Paper (PDF)" link in the header or the embedded viewer above. <br>
+              <strong>Code / Data:</strong> Implementation and real-world training utilities will be released after publication. <br>
+              <strong>Contact:</strong> Please email the authors for early access or reproducibility questions.
+            </p>
+            <blockquote style="margin-top: 1rem;">
+              “When three people walk together, there must be a role model whom I can learn from; I will select the good qualities and follow them.”
+              <br>— Confucius, <i>The Analects</i>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title"><a id="bibtex">BibTeX</a></h2>
-      <pre><code>@inproceedings{rmrl2026,
+      <pre><code>@article{chen2025rm,
   title={RM-RL: Role-Model Reinforcement Learning for Precise Robot Manipulation},
-  author={Xiangyu Chen and Chuhao Zhou and Yuxi Liu and Jianfei Yang},
-  booktitle={Proceedings of the IEEE International Conference on Robotics and Automation (ICRA)},
-  year={2026},
-  url={./ICRA_26_Role_Model_RL.pdf}
-}</code></pre>
+  author={Chen, Xiangyu and Zhou, Chuhao and Liu, Yuxi and Yang, Jianfei},
+  journal={arXiv preprint arXiv:2510.15189},
+  year={2025}
+}
+</code></pre>
     </div>
   </section>
 

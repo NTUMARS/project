@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<meta property='og:title' content='TF-DP: Trace-Focused Diffusion Policy for Multi-Modal Action Disambiguation in Long-Horizon Robotic Manipulation'/>
+<meta property='og:description' content='TF-DP conditions diffusion-based action generation on execution traces to resolve multi-modal action ambiguity (MA^2) in long-horizon manipulation.'/>
+<meta property='og:url' content='https://tfdp.github.io/'/>
+<meta property='og:image:width' content='1200' />
+<meta property='og:image:height' content='663' />
+<!-- TYPE BELOW IS PROBABLY: 'website' or 'article' or look on https://ogp.me/#types -->
+<meta property="og:type" content='website'/>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="TF-DP: Trace-Focused Diffusion Policy for Multi-Modal Action Disambiguation in Long-Horizon Robotic Manipulation">
+  <meta name="keywords" content="TF-DP, Trace-Focused Diffusion Policy, Diffusion Policy, Long-Horizon Manipulation, Multi-Modal Action Ambiguity">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TF-DP: Trace-Focused Diffusion Policy for Multi-Modal Action Disambiguation in Long-Horizon Robotic Manipulation</title>
+  
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/tab_gallery.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="stylesheet" href="juxtapose/css/juxtapose.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/magnifier.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+  <link href="https://fonts.cdnfonts.com/css/menlo" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/image_card_fader.css">
+  <link rel="stylesheet" href="./static/css/image_card_slider.css">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Patrick+Hand|Google+Sans|Noto+Sans|Castoro|Lato|Open+Sans&effect=shadow-multiple|emboss|3d"> 
+  
+  <!-- <link rel="icon" href="./static/images/pyramid.png" type="image/x-icon">
+  <link rel="shortcut icon" href="./static/images/pyramid.png" type="image/x-icon"> -->
+  
+  <!-- The following scripts will take very long loading time-->
+  <!--
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  -->
+</head>
+
+<!--
+<style>
+  @import url('https://fonts.cdnfonts.com/css/menlo');
+
+  .video-table td, .video-table th {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: normal;
+  }
+  .first-col {
+    width: 7%;
+    vertical-align: middle;
+  }
+  .other-col {
+    width: 31%;
+  }
+  body {
+    font-family: "Lato", sans-serif;
+    font-size: 1.1em;
+  }
+  .title.is-3 {
+    font-weight: 900;
+    font-size: 2.0rem;
+  }
+  .title.is-4 {
+    font-weight: 700;
+    font-size: 1.7rem;
+  }
+  .custom-emoji {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background-image: url('./static/images/pyramid.png');
+    background-size: cover;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+</style>
+-->
+
+<style>
+  .gradient-text-h1 {
+    font-size: 40px;
+    font-weight: bold;
+    background: linear-gradient(to right, #ff6a00, #ff3cac, #4e54c8, #00c6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    display: inline;
+  }
+
+  .inline-h1 {
+    font-size: 40px;
+    font-weight: bold;
+    display: inline;
+  }
+
+  .gradient-text-span {
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(to right, #ff6a00, #ff3cac, #4e54c8, #00c6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* 兼容 Firefox */
+    background-clip: text;
+    color: transparent;
+    display: inline;
+  }
+</style>
+  
+<body>
+  <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <br><br>
+          <!--<h1 class="title is-2 publication-title" style="font-size: 2.7rem">-->
+          <!--<h1 style="font-size: 2.4rem">-->
+          <h1 class="gradient-text-h1">
+            <!-- modify in index.css/.publication-title to change the color-->
+            <!--
+            </a><span style="color: #FF4500;"><b>X</b></span><span style="color: #FF6347;"><b>-</b></span><span style="color: #FF8C00;"><b>F</b></span><span style="color: #FF2400;"><b>i</b></span>: A Modality-Invariant Foundation Model for Multimodal Human Sensing
+            -->
+            <b>TF-DP</b>
+          </h1>
+          <h1 class="inline-h1">
+          : Trace-Focused Diffusion Policy for Multi-Modal Action Disambiguation in Long-Horizon Robotic Manipulation
+          </h1>
+        
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <span>Yuxuan Hu*</span>,&nbsp;
+              <span>Xiangyu Chen*</span>,&nbsp;
+              <span>Chuhao Zhou</span>,&nbsp;
+              <span>Yuxi Liu</span>,&nbsp;
+              <span>Gen Li</span>,&nbsp;
+              <span>Jindou Jia</span>,&nbsp;
+              <span>Jianfei Yang†</span>
+            </span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span>* Equal contribution. † Corresponding author: jianfei.yang@ntu.edu.sg.</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">MARS Lab, Nanyang Technological University</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <img src="./static/images/mars_lablogo.png" alt="MARS Lab Logo" style="height: 56px;">
+          </div>
+
+          <!-- <div class="is-size-5 publication-venue">
+            in XXX
+          </div> -->
+          
+          
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Code Link. -->
+              
+              <span class="link-block">
+                <a href="#" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              
+
+              <!-- paper -->
+              
+              <span class="link-block">
+                <a href="./static/pdf/TFDP_manuscript.pdf" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              
+
+              <!-- doc -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- twitter -->
+              <!-- <span class="link-block">
+                <a href="https://x.com/oahzxl/status/1805939975420330298" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                  <span>Twitter</span>
+                </a>
+              </span> -->
+              <!-- bibtex -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-obp"></i>
+                  </span>
+                  <span>BibTex</span>
+                </a>
+              </span>
+            </div>
+          </div>
+          <br />
+          <br />
+          <!--
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><b>Accepted by ICLR 2025</b></span>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="content has-text-justified">
+        <p>
+          <b>Real-Time Video Generation: Achieved <span style="font-size: 1.3em">🥳</span>!</b> We introduce <span class="custom-emoji"></span><b><span style="color: #ff0000;">P</span><span style="color: #f80007;">y</span><span style="color: #f1000e;">r</span><span style="color: #ea0015;">a</span><span style="color: #e4001c;">m</span><span style="color: #dd0022;">i</span><span style="color: #d60029;">d</span> <span style="color: #cf0030;">A</span><span style="color: #c80037;">t</span><span style="color: #c1003e;">t</span><span style="color: #ba0045;">e</span><span style="color: #b3004c;">n</span><span style="color: #ad0053;">t</span><span style="color: #a60059;">i</span><span style="color: #9f0060;">o</span><span style="color: #980067;">n</span> <span style="color: #91006e;">B</span><span style="color: #8a0075;">r</span><span style="color: #83007c;">o</span><span style="color: #7c0083;">a</span><span style="color: #76008a;">d</span><span style="color: #6f0090;">c</span><span style="color: #680097;">a</span><span style="color: #61009e;">s</span><span style="color: #5a00a5;">t</span></b> (<span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span>), the first approach that achieves <b>real-time</b> DiT-based video generation. By mitigating redundant attention computation, <span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span> achieves up to <b>21.6</b> FPS with <b>10.6x</b> acceleration, <b>without sacrificing quality</b> across popular DiT-based video generation models including <a href="https://github.com/hpcaitech/Open-Sora" style="color: blue;">Open-Sora</a>, <a href="https://github.com/PKU-YuanGroup/Open-Sora-Plan" style="color: blue;">Open-Sora-Plan</a>, and <a href="https://github.com/Vchitect/Latte" style="color: blue;">Latte</a>. Notably, as a <b>training-free</b> approach,  <span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span> can enpower <b>any</b> future DiT-based video generation models with real-time capabilities.
+          <br>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container is-max-desktop">
+    <video class="video" autoplay controls muted loop playsinline>
+      <source src="./static/videos/compare.mp4" type="video/mp4">
+    </video>
+    <div class="columns is-centered">
+      <div class="content has-text-centered">
+        <span style="font-size: 0.8em; width: 80%; display: inline-block;"><br>Video 1: Comparison of video generation speeds between original method and ours. We test on Open-Sora with 5 videos of 4s (96 frames) 480p resolution. Baseline and ours use 1 and 8 NVIDIA H100 GPUs respectively.</span>
+        <br>
+      </div>
+    </div>
+  </div>
+</section> -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width"> 
+        <!-- <h2 class="title is-3">Method</h2> -->
+        <!-- <h2 class="title is-4">Modality-Invariant Foundation Model for Human Sensing</h2> -->
+        <div class="content has-text-justified">
+          <!--
+          We introduce <span style="color: #FF4500;"><b>X</b></span><span style="color: #FF6347;"><b>-</b></span><span style="color: #FF8C00;"><b>F</b></span><span style="color: #FF2400;"><b>i</b></span>, the first foundation model that achieves modality-invariant multimodal human sensing. This  model would require <mark>training only once</mark>, allowing <mark>all sensor modalities</mark> that participated in the training process to <mark>be utilized independently or in any combination</mark> for a wide range of potential applications. We evaluated <span style="color: #FF4500;"><b>X</b></span><span style="color: #FF6347;"><b>-</b></span><span style="color: #FF8C00;"><b>F</b></span><span style="color: #FF2400;"><b>i</b></span> on HPE and HAR tasks in MM-Fi <a href="https://openreview.net/pdf?id=1uAsASS1th" target="_blank">[1]</a> and XRF55 <a href="https://dl.acm.org/doi/10.1145/3643543" target="_blank">[2]</a>, demonstrated that <span style="color: #FF4500;"><b>X</b></span><span style="color: #FF6347;"><b>-</b></span><span style="color: #FF8C00;"><b>F</b></span><span style="color: #FF2400;"><b>i</b></span> surpasses previous methods by MPJPE <strong>24.8%</strong> and PA-MPJPE <strong>21.4%</strong> on HPE task, accuracy <strong>2.8%</strong> on HAR task.
+          -->
+          We introduce <span class="gradient-text-span">TF-DP</span>, a diffusion-based policy that conditions action generation on execution history to resolve <strong>multi-modal action ambiguity (MA<sup>2</sup>)</strong> in long-horizon manipulation. TF-DP represents historical motion as an explicit trace, projects it into the visual observation space, and induces a trace-focused field to highlight task-relevant regions, improving temporal consistency and robustness under visual disturbances.
+          <div class="content has-text-centered">
+            <br>
+            <img src="./static/images/teaser.png" alt="TF-DP overview figure"><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Generative model-based policies have shown strong performance in imitation-based robotic manipulation by learning action distributions from demonstrations. However, in long-horizon tasks, visually similar observations often recur across execution stages while requiring distinct actions, which leads to ambiguous predictions when policies are conditioned only on instantaneous observations, termed as multi-modal action ambiguity (MA<sup>2</sup>). To address this challenge, we propose the Trace-Focused Diffusion Policy (TF-DP), a diffusion-based framework that explicitly conditions action generation on the robot’s execution history. TF-DP represents historical motion as an explicit execution trace and projects it into the visual observation space, providing stage-aware context when current observations alone are insufficient. In addition, the induced trace-focused field emphasizes task-relevant regions associated with historical motion, improving robustness to background visual disturbances. We evaluate TF-DP on real-world robotic manipulation tasks exhibiting pronounced multi-modal action ambiguity and visually cluttered conditions. Experimental results show that TF-DP improves temporal consistency and robustness, outperforming the vanilla diffusion policy by 80.56% on tasks with multi-modal action ambiguity and by 86.11% under visual disturbances, while maintaining inference efficiency with only a 6.4% runtime increase.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Highlights</h2>
+        <div class="content has-text-justified summary-panel">
+          <ul>
+            <li>Identify multi-modal action ambiguity (MA<sup>2</sup>) as a key failure mode of diffusion policies in long-horizon manipulation.</li>
+            <li>Condition action generation on execution traces projected into the visual space, with a trace-focused field that emphasizes motion-relevant regions.</li>
+            <li>Demonstrate strong gains in temporal consistency and robustness to visual disturbances on real-world long-horizon tasks.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">        
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Long-horizon manipulation requires a single policy to execute temporally consistent action sequences. Diffusion policies conditioned only on instantaneous observations can produce ambiguous actions when visually similar states reappear at different execution stages.
+            <br>
+            This one-to-many mapping creates multi-modal action ambiguity (MA<sup>2</sup>), causing unstable action sampling and incorrect ordering that compounds over time, especially under visual disturbances.
+            <br>
+            TF-DP resolves MA<sup>2</sup> by integrating execution traces into the policy, enabling the model to distinguish stages and act consistently within a single reactive policy.
+          </p>
+          <!--
+          <div class="container is-max-desktop">
+            <video class="video" autoplay controls muted loop playsinline>
+              <source src="./static/videos/concept.mp4" type="video/mp4">
+            </video>
+          </div>
+          -->
+        </div>
+<!-- 
+        <h2 class="title is-4">Parallelism</h2>
+        <div class="content has-text-centered">
+          <div class="content has-text-centered">
+            <img src="./static/images/parallel.png" style="width: 70%;"><br>
+            <span style="font-size: 0.8em; width: 80%; display: inline-block;">Figure 3: Comparison between original Dynamic Sequence Parallel (DSP) and ours. When temporal attention is broadcasted, we can avoid all communication.</span>
+          </div>
+          <div class="content has-text-justified">
+            To further enhance video generation speed, we improve sequence parallel based on <a href="https://arxiv.org/abs/2403.10266" target="_blank">Dynamic Sequence Parallelism</a> (DSP). Sequence parallelism segments videos into different parts across multiple GPUs, reducing the workload on each GPU and decreasing generation latency. However, DSP introduces significant communication overhead, requiring two all-to-all communications for temporal attention. By broadcasting temporal attention in <span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span>, we eliminate these communications, as temporal attention no longer needs to be computed. This results in a significant reduction in communication overhead by over 50%, enabling more efficient distributed inference for real-time video generation.
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width"> 
+        <h2 class="title is-3">Method</h2>
+        <!-- <h2 class="title is-4">Modality-Invariant Foundation Model for Human Sensing</h2> -->
+        <div class="content has-text-justified">
+          <p>
+            We propose <span class="gradient-text-span">TF-DP</span>, a trace-focused diffusion policy for long-horizon robotic manipulation under multi-modal action ambiguity.
+          </p>
+          <p>
+            TF-DP aggregates historical robot motions into a compact execution trace, projects it into the current visual observation, and computes a trace-focused field that emphasizes task-relevant regions associated with past motion. The diffusion policy then conditions action generation on both the current observation and the trace cues, producing stage-aware, temporally consistent actions.
+          </p>
+          <p>
+            Concretely, TF-DP takes multi-view observations (global, side, wrist) and end-effector state, projects historical 3D end-effector positions into the global image, and renders a dense trace-focused field over the projected trajectory. This execution-aware observation guides the denoising process to resolve ambiguity when visually similar states recur.
+          </p>
+          <div class="content has-text-centered">
+            <img src="./static/images/framework.png" alt="TF-DP framework diagram"><br>
+          </div>
+          <p>
+            Compared to diffusion policies conditioned only on instantaneous observations, TF-DP explicitly encodes execution history, resolving MA<sup>2</sup> within a single reactive policy without relying on hierarchical planners or external high-level reasoning.
+          </p>
+          <p>
+            During training, trace-focused fields are rendered from full demonstration trajectories; during inference, the trace is updated online step-by-step, enabling closed-loop execution without changing the base policy architecture.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Experimental Results</h2>
+        <div class="content has-text-centered">
+          <img src="./static/images/experimental_settings.png" alt="TF-DP experimental settings"><br>
+        </div>
+        <div class="content has-text-justified summary-panel">
+          <p>
+            We compare TF-DP against diffusion policy baselines, including history-conditioned variants, to test whether execution traces resolve MA<sup>2</sup> and improve robustness under visual disturbances. TF-DP consistently recovers the correct action order in long-horizon execution and remains stable under cluttered scenes.
+          </p>
+          <p>
+            Experimental setup: a Franka Research 3 arm is observed by three RGB-D cameras (global overhead, side view, wrist). We evaluate three long-horizon tasks—place cube, press keyboard, and pick &amp; place cubes from drawers—designed to contain visually similar states that require different actions.
+          </p>
+        </div>
+        <h2 class="title is-4">Qualitative Results</h2>
+        <div class="container is-max-desktop">
+          <h2 class="title is-5">Long-Horizon Consistency</h2>
+          <div class="content has-text-justified">
+            <img src="./static/images/traj_visualization.png" alt="TF-DP trajectory visualization"><br>
+            <br>
+            <p>
+              TF-DP produces temporally consistent trajectories by conditioning on execution traces, while baselines often switch to incorrect action stages under visually similar observations.
+            </p>
+          </div>
+        </div>
+        <br>
+        <div class="container is-max-desktop">
+          <h2 class="title is-5">
+            Robustness under Visual Disturbances
+          </h2>
+          <div class="content has-text-justified">
+            <p>
+              TF-DP remains stable under cluttered and visually disturbed scenes by leveraging trace-focused fields that emphasize task-relevant regions.
+            </p>
+          </div>
+          <!-- defined the interpolated image path in index.js function -->
+        </div>
+
+        <div class="container is-max-desktop">
+          <h2 class="title is-4">Videos</h2>
+          <div class="content has-text-justified summary-panel">
+            <p>
+              Each row compares the same manipulation task under two settings: the original scenario and a visually disturbed background.
+              TF-DP maintains stable execution despite clutter and appearance shifts, while preserving task-relevant action sequences.
+            </p>
+          </div>
+          <div class="columns is-centered results-grid">
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task1_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 1 (Original)</div>
+            </div>
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task1_disturbed_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 1 (Disturbed)</div>
+            </div>
+          </div>
+          <div class="columns is-centered results-grid">
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task2_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 2 (Original)</div>
+            </div>
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task2_disturbed_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 2 (Disturbed)</div>
+            </div>
+          </div>
+          <div class="columns is-centered results-grid">
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task3_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 3 (Original)</div>
+            </div>
+            <div class="column is-6">
+              <video class="video" controls muted loop playsinline>
+                <source src="./static/videos/Task3_disturbed_h264.mp4" type="video/mp4">
+              </video>
+              <div class="content has-text-centered">Task 3 (Disturbed)</div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">        
+        <h2 class="title is-4">Quantitative Results</h2>
+        <div class="content has-text-justified summary-panel">
+          <p>
+            TF-DP is evaluated on real-world robotic manipulation tasks that exhibit pronounced MA<sup>2</sup> and visually cluttered conditions. Compared to the vanilla diffusion policy, TF-DP improves success by <strong>80.56%</strong> on tasks with MA<sup>2</sup> and by <strong>86.11%</strong> under visual disturbances, while adding only <strong>6.4%</strong> runtime overhead.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <div class="columns is-variable is-4 is-mobile results-grid">
+            <div class="column is-6">
+              <img class="result-img" src="./static/images/exp_result1.png" alt="TF-DP robustness under visual disturbances">
+              <div class="result-caption">Performance under original scenario.</div>
+            </div>
+            <div class="column is-6">
+              <img class="result-img" src="./static/images/exp_result2.png" alt="TF-DP quantitative results">
+              <div class="result-caption">Performance under visual disturbance.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title"><a id="bibtex">BibTeX</a></h2>
+    <pre><code>@misc{tfdp2026,
+      title={Trace-Focused Diffusion Policy for Multi-Modal Action Disambiguation in Long-Horizon Robotic Manipulation},
+      author={Author Names},
+      year={2026},
+      note={under review},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website adapted from the following <a href="https://nerfies.github.io">source code</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="juxtapose/js/juxtapose.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>    
+
+</body>
+</html>

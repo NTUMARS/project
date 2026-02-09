@@ -1,5 +1,10 @@
 body {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Lato', 'Noto Sans', sans-serif;
+  color: #0d1b2a;
+}
+
+h1, h2, h3, .title {
+  font-family: 'Castoro', 'Google Sans', serif;
 }
 
 

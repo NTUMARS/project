@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<meta property='og:title' content='RF-MatID: Dataset and Benchmark for Radio Frequency Material Identification'/>
+<meta property='og:description' content='RF-MatID: Dataset and Benchmark for Radio Frequency Material Identification'/>
+<meta property='og:url' content='https://ntumars.github.io/project/RFMatID/'/>
+<meta property='og:image:width' content='1200' />
+<meta property='og:image:height' content='663' />
+<!-- TYPE BELOW IS PROBABLY: 'website' or 'article' or look on https://ogp.me/#types -->
+<meta property="og:type" content='website'/>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="RF-MatID: Dataset and Benchmark for Radio Frequency Material Identification">
+  <meta name="keywords" content="RF-MatID: Dataset and Benchmark for Radio Frequency Material Identification">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RF-MatID: Dataset and Benchmark for Radio Frequency Material Identification</title>
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/tab_gallery.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="stylesheet" href="juxtapose/css/juxtapose.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/magnifier.js"></script>
+  <link href="https://fonts.cdnfonts.com/css/menlo" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/image_card_fader.css">
+  <link rel="stylesheet" href="./static/css/image_card_slider.css">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Patrick+Hand|Google+Sans|Noto+Sans|Castoro|Lato|Open+Sans&effect=shadow-multiple|emboss|3d"> 
+  <!-- <link rel="icon" href="./static/images/pyramid.png" type="image/x-icon">
+  <link rel="shortcut icon" href="./static/images/pyramid.png" type="image/x-icon"> -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<style>
+  @import url('https://fonts.cdnfonts.com/css/menlo');
+
+  .video-table td, .video-table th {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: normal;
+  }
+  .first-col {
+    width: 7%;
+    vertical-align: middle;
+  }
+  .other-col {
+    width: 31%;
+  }
+  body {
+    font-family: "Lato", sans-serif;
+    font-size: 1.1em;
+  }
+  .title.is-3 {
+    font-weight: 900;
+    font-size: 2.0rem;
+  }
+  .title.is-4 {
+    font-weight: 700;
+    font-size: 1.7rem;
+  }
+  .custom-emoji {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background-image: url('./static/images/pyramid.png');
+    background-size: cover;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+</style>
+
+
+<body>
+  <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <br><br>
+          <h1 class="title is-2 publication-title" style="font-size: 2.7rem">
+            <!-- modify in index.css/.publication-title to change the color-->
+            <span class="rf-gradient-text">RF-MatID</span>: Dataset and Benchmark for Radio Frequency Material Identification
+          </h1>
+        
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://xyanchen.github.io/" target="_blank">Xinyan Chen</a><sup>1</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="" target="_blank">Qinchun Li</a><sup>1</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="" target="_blank">Ruiqin Ma</a><sup>2</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="" target="_blank">Jiaqi Bai</a><sup>1</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="" target="_blank">Li Yi</a><sup>2</sup>,&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://marsyang.site/" target="_blank">Jianfei Yang</a><sup>1,†</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors columns is-centered is-variable is-8" style="margin-top: 0.5em;">
+  
+            <div class="column is-narrow">
+              <sup>1</sup><a href="https://marslab.tech"><span class="author-block"><span style="color: #FF4500;">M</span><span style="color: #FF6347;">A</span><span style="color: #FF8C00;">R</span><span style="color: #FF2400;">S</span> <span style="color: #f64125;">L</span><span style="color: #f88000;">a</span><span style="color: #FFA500;">b</span></a>, Nanyang Technological University</span><br>
+              <span class="is-size-6">{chen1909, qinchun001, baij0018}@e.ntu.edu.sg</span><br>
+              <span class="is-size-6"><sup>†</sup>Corresponding Author: jianfei.yang@e.ntu.edu.sg</span>
+            </div>
+
+            <div class="column is-narrow">
+              <sup>2</sup>Ibaraki University<br>
+              <span class="is-size-6">li.yi.wg60@vc.ibaraki.ac.jp</span><br>
+              <span class="is-size-6">li.yi.wg60@vc.ibaraki.ac.jp</span>
+            </div>
+
+          </div>
+          <!-- <div class="is-size-5 publication-authors">
+            <br><sup>1</sup><a href="https://marslab.tech"><span class="author-block"><span style="color: #FF4500;">M</span><span style="color: #FF6347;">A</span><span style="color: #FF8C00;">R</span><span style="color: #FF2400;">S</span> <span style="color: #f64125;">L</span><span style="color: #f88000;">a</span><span style="color: #FFA500;">b</span></a>, Nanyang Technological University,</span><br>
+            <span class="author-block is-size-6">{chen1909, qinchun001, baij0018}@e.ntu.edu.sg</span><br>
+            <span class="author-block is-size-6"><sup>†</sup>Corresponding Author: jianfei.yang@e.ntu.edu.sg</span><br><br>
+            <span class="author-block"><sup>2</sup>Ibaraki University</span><br>
+            <span class="author-block is-size-6">li.yi.wg60@vc.ibaraki.ac.jp</span><br>
+
+          </div> -->
+
+          <!-- <div class="is-size-5 publication-venue">
+            in XXX
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/NTUMARS/RF-MatID" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- paper -->
+              <span class="link-block">
+                <a href="https://openreview.net/pdf?id=qtLkYI6tq2" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- doc -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2601.20377"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- twitter -->
+              <!-- <span class="link-block">
+                <a href="https://x.com/oahzxl/status/1805939975420330298" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                  <span>Twitter</span>
+                </a>
+              </span> -->
+              <!-- bibtex -->
+              <span class="link-block">
+                <a href="#bibtex"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-obp"></i>
+                  </span>
+                  <span>BibTex</span>
+                </a>
+              </span>
+            </div>
+          </div>
+          <br />
+          <br />
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><b>Accepted by ICLR 2026</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="content has-text-justified">
+        <p>
+          <b>Real-Time Video Generation: Achieved <span style="font-size: 1.3em">🥳</span>!</b> We introduce <span class="custom-emoji"></span><b><span style="color: #ff0000;">P</span><span style="color: #f80007;">y</span><span style="color: #f1000e;">r</span><span style="color: #ea0015;">a</span><span style="color: #e4001c;">m</span><span style="color: #dd0022;">i</span><span style="color: #d60029;">d</span> <span style="color: #cf0030;">A</span><span style="color: #c80037;">t</span><span style="color: #c1003e;">t</span><span style="color: #ba0045;">e</span><span style="color: #b3004c;">n</span><span style="color: #ad0053;">t</span><span style="color: #a60059;">i</span><span style="color: #9f0060;">o</span><span style="color: #980067;">n</span> <span style="color: #91006e;">B</span><span style="color: #8a0075;">r</span><span style="color: #83007c;">o</span><span style="color: #7c0083;">a</span><span style="color: #76008a;">d</span><span style="color: #6f0090;">c</span><span style="color: #680097;">a</span><span style="color: #61009e;">s</span><span style="color: #5a00a5;">t</span></b> (<span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span>), the first approach that achieves <b>real-time</b> DiT-based video generation. By mitigating redundant attention computation, <span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span> achieves up to <b>21.6</b> FPS with <b>10.6x</b> acceleration, <b>without sacrificing quality</b> across popular DiT-based video generation models including <a href="https://github.com/hpcaitech/Open-Sora" style="color: blue;">Open-Sora</a>, <a href="https://github.com/PKU-YuanGroup/Open-Sora-Plan" style="color: blue;">Open-Sora-Plan</a>, and <a href="https://github.com/Vchitect/Latte" style="color: blue;">Latte</a>. Notably, as a <b>training-free</b> approach,  <span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span> can enpower <b>any</b> future DiT-based video generation models with real-time capabilities.
+          <br>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container is-max-desktop">
+    <video class="video" autoplay controls muted loop playsinline>
+      <source src="./static/videos/compare.mp4" type="video/mp4">
+    </video>
+    <div class="columns is-centered">
+      <div class="content has-text-centered">
+        <span style="font-size: 0.8em; width: 80%; display: inline-block;"><br>Video 1: Comparison of video generation speeds between original method and ours. We test on Open-Sora with 5 videos of 4s (96 frames) 480p resolution. Baseline and ours use 1 and 8 NVIDIA H100 GPUs respectively.</span>
+        <br>
+      </div>
+    </div>
+  </div>
+</section> -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width"> 
+        <!-- <h2 class="title is-3">Method</h2> -->
+        <!-- <h2 class="title is-4">Modality-Invariant Foundation Model for Human Sensing</h2> -->
+        <div class="content has-text-justified">
+            We introduce <span class="rf-gradient-text">RF-MatID</span>, the first open-source, large-scale, and geometry-diverse RF dataset for fine-grained material identification. 
+            This dataset provides 142k samples (71k each on time and frequency domains) across a wide frequency range of 4 to 43.5 GHz 
+            and systematically incorporates geometric variations (incidence angle, stand-off distance). <span class="rf-gradient-text">RF-MatID</span> also introduces a rigorous benchmark 
+            setting by defining 5 frequency protocols (aligned with global regulations) and 7 data split settings (including out-of-distribution tests). 
+            We extensively evaluate 11 deep learning models (spanning CV, NLP, Time-Series, and RF research) across 3 protocols and 7 split settings. 
+            Additionally, a comprehensive baseline is constructed on all 5 protocols and 7 split settings.
+        </div>
+        <div style="width: 100%; max-width: 2000px; margin: 0 auto; padding: 10px;">          
+          <video class="video" autoplay controls muted loop playsinline style="box-shadow: none !important;">
+            <source src="./static/videos/rf_3plus2_matrix.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; font-size: 1.2em; color: #666; margin-top: 20px;">
+              Visualization of the frequency-domain RF data of the 5 selected materials.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Accurate material identification plays a crucial role in embodied AI systems, enabling a wide range of applications. 
+            However, current vision-based solutions are limited by the inherent constraints of optical sensors, while radio-frequency (RF) approaches, 
+            which can reveal intrinsic material properties, have received growing attention. Despite this progress, 
+            RF-based material identification remains hindered by the lack of large-scale public datasets and the limited benchmarking of learning-based approaches. 
+            In this work, we present RF-MatID, the first open-source, large-scale, wide-band, and geometry-diverse RF dataset for fine-grained material identification. 
+            RF-MatID includes 16 fine-grained categories grouped into 5 superclasses, spanning a broad frequency range from 4 to 43.5 GHz, and comprises 142k samples 
+            in both frequency- and time-domain representations. The dataset systematically incorporates controlled geometry perturbations, including variations in 
+            incidence angle and stand-off distance. We further establish a multi-setting, multi-protocol benchmark by evaluating state-of-the-art deep learning models, 
+            assessing both in-distribution performance and out-of-distribution robustness under cross-angle and cross-distance shifts. The 5 frequency-allocation protocols 
+            enable systematic frequency- and region-level analysis, thereby facilitating real-world deployment. RF-MatID aims to enable reproducible research, 
+            accelerate algorithmic advancement, foster cross-domain robustness, and support the development of real-world applications in RF-based material identification.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">        
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Traditional material identification mainly uses cameras and hyperspectral sensors. While effective for surface textures, these methods are limited by lighting conditions and the visual similarity of different materials. Most importantly, optical sensors cannot reveal intrinsic physical properties like conductivity, highlighting the need for alternative sensing modalities.
+            To address these gaps, non-visual modalities like Radio Frequency (RF) are gaining traction. By leveraging electromagnetic interactions, RF reveals intrinsic material properties that go beyond surface appearance. However, the field currently faces three major hurdles: a lack of large-scale open datasets, fragmented frequency coverage in commercial sensors, and insufficient testing against real-world variables like distance and angles. Bridging these gaps is essential for moving RF sensing from controlled labs to robust, scalable deployments.
+            <br>
+            <br>
+            To bridge these gaps, we present <em class=method-text>RF-MatID: the first open-source, large-scale, wide-band, and geometry-diverse RF dataset specifically designed for fine-grained material identification.</em> Spanning a broad <strong>4 to 43.5 GHz</strong> spectrum, the dataset provides <strong>142,000 samples</strong> represented in both the frequency and time domains (71,000 samples in each) across <strong>15 material categories</strong>, systematically capturing the subtle variations needed to train robust Physical AI algorithms. RF-MatID also provides <strong>5 frequency protocols</strong> (including protocols compliant with legal frequency regulations in major global economies) and <strong>7 split settings</strong> for a comprehensive benchmark.
+          </p>
+          <img src="./static/images/dataset_comaprison.png">
+          <!-- <div class="container is-max-desktop">
+            <video class="video" autoplay controls muted loop playsinline>
+              <source src="./static/videos/concept.mp4" type="video/mp4">
+            </video>
+          </div> -->
+        </div>
+<!-- 
+        <h2 class="title is-4">Parallelism</h2>
+        <div class="content has-text-centered">
+          <div class="content has-text-centered">
+            <img src="./static/images/parallel.png" style="width: 70%;"><br>
+            <span style="font-size: 0.8em; width: 80%; display: inline-block;">Figure 3: Comparison between original Dynamic Sequence Parallel (DSP) and ours. When temporal attention is broadcasted, we can avoid all communication.</span>
+          </div>
+          <div class="content has-text-justified">
+            To further enhance video generation speed, we improve sequence parallel based on <a href="https://arxiv.org/abs/2403.10266" target="_blank">Dynamic Sequence Parallelism</a> (DSP). Sequence parallelism segments videos into different parts across multiple GPUs, reducing the workload on each GPU and decreasing generation latency. However, DSP introduces significant communication overhead, requiring two all-to-all communications for temporal attention. By broadcasting temporal attention in <span style="color: #e2001d;">P</span><span style="color: #a80057;">A</span><span style="color: #6d0092;">B</span>, we eliminate these communications, as temporal attention no longer needs to be computed. This results in a significant reduction in communication overhead by over 50%, enabling more efficient distributed inference for real-time video generation.
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width"> 
+        <h2 class="title is-3">Sensor Platform</h2>
+        <!-- <h2 class="title is-4">Modality-Invariant Foundation Model for Human Sensing</h2> -->
+        <div class="content has-text-justified">
+          <p>
+            To facilitate the data acquisition of our RF-MatID, we develop a customized RF data collection platform. The system has a sensing range of ~2 m and a beam footprint of 1-5 cm which are intentionally tailored for indoor robot manipulation tasks in embodied AI that require high-precision, close-range perception.
+          </p>
+          <div class="content has-text-centered">
+            <img src="./static/images/RF_platform.png"><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Materical Categories</h2>
+        <div class="content has-text-justified">
+          <p>
+            RF-MatID encompasses 16 fine-grained material categories organized into five superclasses. The fine-grained material categories include: for bricks, (a) overfired clay brick, (b) lightweight perforated brick, (c) lava brick; for glass, (d) transparent acrylic glass, (e) tempered glass, (f) white opaque acrylic glass; for synthetic materials, (g) melamine-faced chipboard, (h) mineral fiber board, (i) solid polyvinyl chloride sheet; for woods, (j) cedar sleeper, (k) luan plywood, (l) red oak plywood; and for stones, (m) permeable paving Stone, (n) agglomerated stone, (o) granite, (p) concrete.           </p>
+            <div class="content has-text-centered">
+              <img src="./static/images/materials.png"><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Evaluations</h2>
+        <h2 class="title is-4">Benchmark of Deep Learning Models</h2>
+        <div class="content has-text-justified">
+          <p>
+            Considering the sequential dependencies across frequency bins as well as the spatial features along the frequency and channel dimensions, we benchmark a diverse set of models commonly used in computer vision, natural language processing, time-series, and RF-sensing research. We also introduce a simple yet robust baseline model that leverages frequency-aware positional encoding to preserve global consistency. Parallel extractors independently capture spatial and temporal features, which are then integrated into class probabilities via an MLP fusion module.
+          </p>
+          <div class="content has-text-centered">
+            <img src="./static/images/benchmark.png"><br>
+        </div>
+        <h2 class="title is-4">Quantitative Baseline Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            To construct a comprehensive baseline, we evaluate the baseline model across all three category divisions, seven split settings, and five protocols.
+          </p>
+          <div class="content has-text-centered">
+            <img src="./static/images/baseline.png"><br>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related links</h2>
+        <!-- <div class="content has-text-justified">
+          <p>
+            <li>
+              Jianfei Yang, He Huang, Yunjiao Zhou, Xinyan Chen, Yuecong Xu, Shenghai Yuan, Han Zou, Chris Xiaoxuan Lu, and Lihua Xie. <a href="https://openreview.net/pdf?id=1uAsASS1th">Mm-fi: Multi-modal non-intrusive 4d human dataset for versatile wireless sensing</a>. Advances in Neural Information Processing Systems, 36, 2024.
+            </li>
+            <li>
+              Fei Wang, Yizhe Lv, Mengdie Zhu, Han Ding, and Jinsong Han. <a href="https://dl.acm.org/doi/10.1145/3643543">Xrf55: A radio frequency dataset for human indoor action analysis</a>. Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies, 8(1):1–34, 2024.
+            </li>
+          </p>
+        </div> -->
+
+        <!-- <h2 class="title is-3">Acknowledgments</h2>
+        <div class="content has-text-justified">
+          <p>
+            Xuanlei, Xiaolong, and Kai contribute equally to this work. Kai and Yang are equal advising.
+          </p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title"><a id="bibtex">BibTeX</a></h2>
+    <pre><code>@article{chen2026rf,
+        title={RF-MatID: Dataset and Benchmark for Radio Frequency Material Identification},
+        author={Chen, Xinyan and Li, Qinchun and Ma, Ruiqin and Bai, Jiaqi and Yi, Li and Yang, Jianfei},
+        journal={arXiv preprint arXiv:2601.20377},
+        year={2026}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This dataset is licensed under a <a rel="data_license" href="https://github.com/NTUMARS/RF-MatID?tab=BSD-3-Clause-1-ov-file#readme">BSD 3-Clause License</a>.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website adapted from the following <a href="https://nerfies.github.io">source code</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="juxtapose/js/juxtapose.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>    
+
+</body>
+</html>
